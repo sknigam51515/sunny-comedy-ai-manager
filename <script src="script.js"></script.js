@@ -1,4 +1,4 @@
-
+<script src="script.js"></script>
 document.addEventListener("DOMContentLoaded", function () {
 
   const pages = ["home", "script", "seo", "upload", "analytics"];
