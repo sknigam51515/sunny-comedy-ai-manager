@@ -1,0 +1,65 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+  const navButtons = document.querySelectorAll(".nav");
+  const sections = document.querySelectorAll("[data-page]");
+
+  // Sidebar navigation
+  navButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const page = button.dataset.page;
+
+      navButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      sections.forEach(section => {
+        section.classList.toggle(
+          "hidden",
+          section.dataset.page !== page
+        );
+      });
+    });
+  });
+
+  // Generate video title and hashtags
+  const generateButton = document.querySelector("#generate");
+  const topicInput = document.querySelector("#topic");
+  const output = document.querySelector("#output");
+
+  if (generateButton && topicInput && output) {
+    generateButton.addEventListener("click", () => {
+      const topic = topicInput.value.trim();
+
+      if (!topic) {
+        output.textContent = "Please enter a video topic first.";
+        return;
+      }
+
+      output.textContent =
+        "VIDEO TITLE:\n" +
+        topic + " 😂 | Funny Comedy Video\n\n" +
+        "DESCRIPTION:\n" +
+        "Enjoy this funny video! Like, share and subscribe.\n\n" +
+        "HASHTAGS:\n" +
+        "#Comedy #Funny #Shorts #Viral #SunnyComedy";
+    });
+  }
+
+  // Copy generated output
+  const copyButton = document.querySelector("#copy");
+
+  if (copyButton && output) {
+    copyButton.addEventListener("click", async () => {
+      if (!output.textContent.trim()) return;
+
+      try {
+        await navigator.clipboard.writeText(output.textContent);
+        copyButton.textContent = "Copied!";
+      } catch {
+        output.textContent += "\n\nPlease select and copy this text manually.";
+      }
+    });
+  }
+
+  // Welcome message
+  console.log("Sunny Comedy AI Manager loaded successfully!");
+});
